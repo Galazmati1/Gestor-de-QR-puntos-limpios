@@ -36,4 +36,7 @@ def index():
 if __name__ == '__main__':
     # Configuración de logs para reducir el ruido de MongoDB
     logging.getLogger('pymongo').setLevel(logging.WARNING)
-    app.run(debug=True)
+    
+    # Usar el puerto proporcionado por Google Cloud Run o el 8080 por defecto
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=port)
