@@ -5,7 +5,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from crear_punto import crear_punto_bp
-from modificar_punto import modificar_punto_bp  # Nuevo Blueprint
+from modificar_punto import modificar_punto_bp
 
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
@@ -26,17 +26,11 @@ db = client.reciclaje_db
 
 # Registrar los Blueprints
 app.register_blueprint(crear_punto_bp)
-app.register_blueprint(modificar_punto_bp)  # Registrar el nuevo Blueprint
+app.register_blueprint(modificar_punto_bp)
 
 # Ruta principal
 @app.route('/')
 def index():
     return render_template('index.html')
 
-if __name__ == '__main__':
-    # Configuración de logs para reducir el ruido de MongoDB
-    logging.getLogger('pymongo').setLevel(logging.WARNING)
-    
-    # Usar el puerto proporcionado por Google Cloud Run o el 8080 por defecto
-    port = int(os.environ.get('PORT', 8080))
-    app.run(host='0.0.0.0', port=port)
+# No necesitas el bloque 'if __name__ == "__main__"' porque vas a usar gunicorn en producción
