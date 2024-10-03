@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto Creado - Código QR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>¡Punto Creado Exitosamente!</h1>
+    <p>A continuación se muestra el código QR generado:</p>
+    <img src="data:image/jpeg;base64,{{ img_str }}" alt="QR Code">
+    
+    <!-- Enlace de descarga con el nombre de archivo dinámico -->
+    <a download="{{ empresa }} - {{ punto_limpio }} QR.jpeg" href="data:image/jpeg;base64,{{ img_str }}" class="button">Descargar QR</a>
+</body>
+</html>

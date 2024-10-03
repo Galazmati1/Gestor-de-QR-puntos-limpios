@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Punto - Número de Punto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Crear Punto para {{ empresa }}</h1>
+    <p>Se generará el siguiente número de punto: <strong>{{ nuevo_punto }}</strong></p>
+    <form method="POST" action="{{ url_for('crear_punto.crear_punto_numero', empresa=empresa) }}">
+        <input type="hidden" name="punto_limpio" value="{{ nuevo_punto }}">
+        <input type="hidden" name="empresa" value="{{ empresa }}">  <!-- Pasar empresa en el formulario -->
+        <button type="submit" class="button">Validar y Continuar</button>
+    </form>
+</body>
+</html>

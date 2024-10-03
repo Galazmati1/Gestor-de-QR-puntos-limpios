@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Punto - Selección de Empresa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Crear Nuevo Punto</h1>
+    <form method="POST" action="{{ url_for('crear_punto.crear_punto') }}">
+        <label for="empresa">Selecciona una Empresa:</label>
+        <select name="empresa" id="empresa">
+            {% for empresa in empresas %}
+                <option value="{{ empresa }}">{{ empresa }}</option>
+            {% endfor %}
+            <option value="nueva_empresa">Nueva Empresa</option>
+        </select>
+
+        <div id="nueva-empresa-input" style="display:none;">
+            <label for="nueva_empresa">Nueva Empresa:</label>
+            <input type="text" name="nueva_empresa" id="nueva_empresa">
+        </div>
+
+        <button type="submit" class="button">Siguiente</button>
+    </form>
+
+    <script>
+        document.getElementById('empresa').addEventListener('change', function() {
+            var nuevaEmpresaInput = document.getElementById('nueva-empresa-input');
+            if (this.value === 'nueva_empresa') {
+                nuevaEmpresaInput.style.display = 'block';
+            } else {
+                nuevaEmpresaInput.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

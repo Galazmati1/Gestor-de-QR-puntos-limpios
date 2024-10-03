@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Punto Limpio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Seleccionar Empresa</h1>
+    <form action="{{ url_for('modificar_punto.seleccionar_empresa') }}" method="POST">
+        <label for="empresa">Seleccione una empresa:</label>
+        <select name="empresa" id="empresa">
+            {% for empresa in empresas %}
+                <option value="{{ empresa }}">{{ empresa }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="button">Buscar Puntos</button>
+    </form>
+</body>
+</html>

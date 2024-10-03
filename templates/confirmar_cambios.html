@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambios Guardados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Cambios Guardados Exitosamente</h1>
+    <p>Los detalles del punto limpio han sido actualizados:</p>
+
+    <p><strong>Empresa:</strong> {{ punto.empresa }}</p>
+    <p><strong>Número de punto limpio:</strong> {{ punto.punto_limpio }}</p>
+    <p><strong>Descripción:</strong> {{ punto.descripcion }}</p>
+    <p><strong>Coordenadas:</strong> Latitud: {{ punto.latitud }}, Longitud: {{ punto.longitud }}</p>
+
+    <a href="{{ url_for('modificar_punto.descargar_qr', punto_id=punto._id) }}" class="button">Descargar QR</a>
+</body>
+</html>

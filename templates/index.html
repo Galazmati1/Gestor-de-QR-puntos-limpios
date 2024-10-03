@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reciclaje - Panel de Control</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Panel de Control de Reciclaje</h1>
+    <div>
+        <!-- Botón para crear un nuevo punto limpio -->
+        <a href="{{ url_for('crear_punto.crear_punto') }}" class="button">Crear Nuevo Punto</a>
+        
+        <!-- Botón para modificar puntos existentes -->
+        <a href="{{ url_for('modificar_punto.seleccionar_empresa') }}" class="button">Modificar Punto Existente</a>
+    </div>
+</body>
+</html>

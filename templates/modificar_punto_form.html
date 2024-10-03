@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Punto - {{ empresa }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+</head>
+<body>
+    <h1>Modificar Punto Limpio para {{ empresa }} - Número {{ punto_limpio }}</h1>
+    <form id="punto-form" method="POST" action="{{ url_for('modificar_punto.modificar_punto_form', punto_id=punto._id) }}">
+        <label for="descripcion">Descripción de la Ubicación:</label>
+        <input type="text" id="descripcion" name="descripcion" value="{{ punto.descripcion }}" required>
+
+        <label for="buscar-direccion">Buscar por Dirección:</label>
+        <input type="text" id="buscar-direccion" placeholder="Ingresa una dirección">
+        <button type="button" id="buscar-btn">Buscar Dirección</button>
+
+        <!-- Mapa para seleccionar la ubicación -->
+        <div id="map"></div>
+        
+        <!-- Coordenadas visibles para el usuario -->
+        <div id="coordenadas">
+            Coordenadas: Latitud: <span id="latitud-display">{{ punto.latitud }}</span>, Longitud: <span id="longitud-display">{{ punto.longitud }}</span>
+        </div>
+
+        <!-- Campos ocultos para almacenar las coordenadas -->
+        <input type="hidden" name="latitud" id="latitud" value="{{ punto.latitud }}">
+        <input type="hidden" name="longitud" id="longitud" value="{{ punto.longitud }}">
+
+        <!-- Botones de acción -->
+        <button type="submit" class="button">Guardar Cambios</button>
+        <a href="{{ url_for('modificar_punto.descargar_qr', punto_id=punto._id) }}" class="button">Descargar QR</a>
+
+        <!-- Botón para eliminar el punto -->
+        <button type="button" class="button delete-button" onclick="confirmDelete('{{ url_for('modificar_punto.eliminar_punto', punto_id=punto._id) }}')">Eliminar Punto</button>
+    </form>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Leaflet Control Geocoder JS -->
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+    <!-- Script para el mapa y las coordenadas -->
+    <script>
+        // Crear el mapa con las coordenadas actuales del punto limpio
+        let map = L.map('map').setView([{{ punto.latitud }}, {{ punto.longitud }}], 13);
+
+        // Añadir capa de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Geocodificador para buscar direcciones
+        let geocoder = L.Control.Geocoder.nominatim();
+        let control = L.Control.geocoder({
+            geocoder: geocoder,
+            defaultMarkGeocode: false
+        });
+
+        // Añadir marcador con las coordenadas actuales, habilitado para ser arrastrado
+        let marker = L.marker([{{ punto.latitud }}, {{ punto.longitud }}], {draggable: true}).addTo(map);
+
+        // Función para actualizar las coordenadas en el formulario
+        function actualizarCoordenadas(latLng) {
+            document.getElementById('latitud').value = latLng.lat.toFixed(4);
+            document.getElementById('longitud').value = latLng.lng.toFixed(4);
+            document.getElementById('latitud-display').innerText = latLng.lat.toFixed(4);
+            document.getElementById('longitud-display').innerText = latLng.lng.toFixed(4);
+        }
+
+        // Actualizar coordenadas cuando se arrastra el marcador
+        marker.on('dragend', function(e) {
+            let latLng = marker.getLatLng();
+            actualizarCoordenadas(latLng);
+        });
+
+        // Actualizar coordenadas al hacer clic en el mapa
+        map.on('click', function(e) {
+            let latLng = e.latlng;
+            marker.setLatLng(latLng).update();  // Mover el marcador al punto clickeado
+            actualizarCoordenadas(latLng);
+        });
+
+        // Inicializar las coordenadas con la posición actual del marcador
+        actualizarCoordenadas(marker.getLatLng());
+
+        // Evitar que el formulario se envíe al presionar Enter en la búsqueda de direcciones
+        document.getElementById('buscar-direccion').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('buscar-btn').click();  // Simular un clic en el botón de búsqueda
+            }
+        });
+
+        // Acción del botón de buscar dirección
+        document.getElementById('buscar-btn').addEventListener('click', function() {
+            let direccion = document.getElementById('buscar-direccion').value;
+            if (direccion) {
+                geocoder.geocode(direccion, function(results) {
+                    if (results.length > 0) {
+                        let latLng = results[0].center;
+                        marker.setLatLng(latLng).update();
+                        map.setView(latLng, 16);
+
+                        // Actualizar las coordenadas
+                        actualizarCoordenadas(latLng);
+                    } else {
+                        alert("Dirección no encontrada.");
+                    }
+                });
+            }
+        });
+
+        // Función para confirmar la eliminación del punto
+        function confirmDelete(deleteUrl) {
+            if (confirm("¿Estás seguro de que deseas eliminar este punto? ¡Esta acción no se puede deshacer!")) {
+                window.location.href = deleteUrl;  // Redirigir a la ruta de eliminación
+            }
+        }
+    </script>
+</body>
+</html>

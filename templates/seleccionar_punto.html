@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Punto Limpio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Puntos Limpios de {{ empresa }}</h1>
+    <form action="{{ url_for('modificar_punto.seleccionar_punto', empresa=empresa) }}" method="POST">
+        <label for="punto_id">Seleccione un punto limpio:</label>
+        <select name="punto_id" id="punto_id">
+            {% for punto in puntos %}
+                <option value="{{ punto._id }}"> {{ punto.punto_limpio }} - {{ punto.descripcion }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="button">Editar Punto</button>
+    </form>
+</body>
+</html>
