@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, url_for, jsonify
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify, send_file
 from pymongo import MongoClient
 import os
 from bson.objectid import ObjectId
@@ -97,16 +97,20 @@ def descargar_qr(punto_id):
         return "QR no disponible", 404
 
     # Decodificar el QR de la base de datos
-    img_data = base64.b64decode(punto['qr_image_base64'])
-    buffer = BytesIO()
-    buffer.write(img_data)
+    try:
+        img_data = base64.b64decode(punto['qr_image_base64'])
+    except Exception as e:
+        return f"Error al decodificar la imagen QR: {str(e)}", 500
+
+    # Guardar la imagen en un buffer
+    buffer = BytesIO(img_data)
     buffer.seek(0)
 
     # Enviar el archivo al usuario con el nombre apropiado
     nombre_archivo = f"{punto['empresa']}_{punto['punto_limpio']}_QR.jpeg"
     return send_file(buffer, mimetype='image/jpeg', as_attachment=True, download_name=nombre_archivo)
 
-#Eliminar un punto limpio
+# Eliminar un punto limpio
 @modificar_punto_bp.route('/modificar_punto/eliminar/<punto_id>', methods=['GET'])
 def eliminar_punto(punto_id):
     # Eliminar el punto limpio de la base de datos

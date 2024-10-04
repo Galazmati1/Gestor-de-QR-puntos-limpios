@@ -6,6 +6,7 @@ from io import BytesIO
 import base64
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
+from PIL import Image
 
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
@@ -75,10 +76,22 @@ def generar_qr(punto_limpio, empresa, descripcion, latitud, longitud):
     # Generar la URL
     url = f"http://plataforma.teleportero.cl/upload?punto_limpio={punto_limpio}&empresa={empresa}"
 
-    # Generar el código QR
-    qr = qrcode.make(url)
+    # Crear el código QR
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(url)
+    qr.make(fit=True)
+
+    # Generar la imagen QR con PIL
+    img = qr.make_image(fill="black", back_color="white").convert('RGB')
     buffer = BytesIO()
-    qr.save(buffer, format="JPEG")
+
+    # Guardar la imagen en formato JPEG en el buffer
+    img.save(buffer, format="JPEG")
     img_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
 
     # Guardar en la base de datos
@@ -93,10 +106,11 @@ def generar_qr(punto_limpio, empresa, descripcion, latitud, longitud):
         "punto_activo": True
     }
     resultado = db.puntos_activos.insert_one(nuevo_punto)
-    punto_id = str(resultado.inserted_id)  # Obtener el ID del punto insertado
+    punto_id = str(resultado.inserted_id)
 
     # Redirigir al paso final para mostrar el QR
     return redirect(url_for('crear_punto.punto_creado', punto_id=punto_id))
+
 
 # Paso 5: Mostrar el resultado y descargar el QR
 @crear_punto_bp.route('/crear_punto/punto_creado/<punto_id>', methods=['GET'])
