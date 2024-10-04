@@ -1,0 +1,9 @@
+# Ignorar archivos y carpetas innecesarias
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Ignorar archivos de configuración local
+.idea/

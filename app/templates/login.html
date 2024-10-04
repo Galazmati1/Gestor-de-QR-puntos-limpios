@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Por favor, ingrese la clave de acceso</h1>
+    <form method="POST" action="/">
+        <label for="password">Clave:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Acceder</button>
+    </form>
+</body>
+</html>
