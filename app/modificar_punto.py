@@ -58,18 +58,19 @@ def modificar_punto_form(punto_id):
 
     elif request.method == 'POST':
         # Obtener los datos del formulario
-        descripcion = request.form.get('descripcion')
+        ubicacion = request.form.get('ubicacion')  # Cambiado de 'descripcion' a 'ubicacion'
         latitud = request.form.get('latitud')
         longitud = request.form.get('longitud')
 
         # Actualizar el punto en la base de datos
         db.puntos_activos.update_one(
             {"_id": ObjectId(punto_id)},
-            {"$set": {"descripcion": descripcion, "latitud": float(latitud), "longitud": float(longitud)}}
+            {"$set": {"ubicacion": ubicacion, "latitud": float(latitud), "longitud": float(longitud)}}
         )
 
         # Redirigir al último paso
         return redirect(url_for('modificar_punto.confirmar_cambios', punto_id=punto_id))
+
 
 # Paso 4: Confirmar cambios
 @modificar_punto_bp.route('/modificar_punto/confirmar/<punto_id>', methods=['GET', 'POST'])

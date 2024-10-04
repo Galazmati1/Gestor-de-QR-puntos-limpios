@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 </head>
 <body>
-    <h1>Modificar Punto Limpio para {{ empresa }} - Número {{ punto_limpio }}</h1>
+    <h1>Modificar Punto Limpio Número {{ punto.punto_limpio }} de {{ punto.empresa }} </h1>
     <form id="punto-form" method="POST" action="{{ url_for('modificar_punto.modificar_punto_form', punto_id=punto._id) }}">
-        <label for="descripcion">Descripción de la Ubicación:</label>
-        <input type="text" id="descripcion" name="descripcion" value="{{ punto.descripcion }}" required>
+        <label for="ubicacion">Descripción de la Ubicación:</label>
+        <input type="text" id="ubicacion" name="ubicacion" value="{{ punto.ubicacion }}" required>
 
         <label for="buscar-direccion">Buscar por Dirección:</label>
         <input type="text" id="buscar-direccion" placeholder="Ingresa una dirección">

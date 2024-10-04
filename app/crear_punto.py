@@ -100,7 +100,7 @@ def generar_qr(punto_limpio, empresa, descripcion, latitud, longitud):
         "empresa": empresa,
         "latitud": float(latitud),
         "longitud": float(longitud),
-        "descripcion": descripcion,
+        "ubicacion": descripcion,
         "url_qr": url,
         "qr_image_base64": img_str,
         "punto_activo": True

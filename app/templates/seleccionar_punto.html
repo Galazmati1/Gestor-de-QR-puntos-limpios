@@ -12,7 +12,7 @@
         <label for="punto_id">Seleccione un punto limpio:</label>
         <select name="punto_id" id="punto_id">
             {% for punto in puntos %}
-                <option value="{{ punto._id }}"> {{ punto.punto_limpio }} - {{ punto.descripcion }}</option>
+                <option value="{{ punto._id }}"> {{ punto.punto_limpio }} - {{ punto.ubicacion }}</option>
             {% endfor %}
         </select>
         <button type="submit" class="button">Editar Punto</button>

@@ -12,7 +12,7 @@
 
     <p><strong>Empresa:</strong> {{ punto.empresa }}</p>
     <p><strong>Número de punto limpio:</strong> {{ punto.punto_limpio }}</p>
-    <p><strong>Descripción:</strong> {{ punto.descripcion }}</p>
+    <p><strong>Descripción:</strong> {{ punto.ubicacion }}</p>
     <p><strong>Coordenadas:</strong> Latitud: {{ punto.latitud }}, Longitud: {{ punto.longitud }}</p>
 
     <a href="{{ url_for('modificar_punto.descargar_qr', punto_id=punto._id) }}" class="button">Descargar QR</a>

@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 from crear_punto import crear_punto_bp
 from modificar_punto import modificar_punto_bp
+from PIL import Image  # Asegúrate de importar Pillow aquí
 
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
