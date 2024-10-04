@@ -53,7 +53,7 @@ def modificar_punto_form(punto_id):
     if request.method == 'GET':
         if not punto:
             return "Punto no encontrado", 404
-        # Renderizar formulario con los detalles del punto limpio
+        # Renderizar formulario con los detalles del punto limpio, incluyendo el estado (activo/inactivo)
         return render_template('modificar_punto_form.html', punto=punto)
 
     elif request.method == 'POST':
@@ -61,16 +61,22 @@ def modificar_punto_form(punto_id):
         ubicacion = request.form.get('ubicacion')  # Cambiado de 'descripcion' a 'ubicacion'
         latitud = request.form.get('latitud')
         longitud = request.form.get('longitud')
+        estado = request.form.get('estado')  # Estado del punto (activo/inactivo)
+
+        # Convertir el estado a booleano
+        if estado == "activo":
+            estado_bool = True
+        else:
+            estado_bool = False
 
         # Actualizar el punto en la base de datos
         db.puntos_activos.update_one(
             {"_id": ObjectId(punto_id)},
-            {"$set": {"ubicacion": ubicacion, "latitud": float(latitud), "longitud": float(longitud)}}
+            {"$set": {"ubicacion": ubicacion, "latitud": float(latitud), "longitud": float(longitud), "punto_activo": estado_bool}}
         )
 
         # Redirigir al último paso
         return redirect(url_for('modificar_punto.confirmar_cambios', punto_id=punto_id))
-
 
 # Paso 4: Confirmar cambios
 @modificar_punto_bp.route('/modificar_punto/confirmar/<punto_id>', methods=['GET', 'POST'])

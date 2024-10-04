@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activar/Desactivar Puntos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!-- Enlace al archivo CSS -->
+</head>
+<body>
+    <h1>Seleccionar Empresa para Activar/Desactivar Puntos</h1>
+    
+    <form method="POST">
+        <label for="empresa">Seleccione una Empresa:</label>
+        <select name="empresa" id="empresa" required>
+            {% for empresa in empresas %}
+            <option value="{{ empresa }}">{{ empresa }}</option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+        <label for="accion">Acción:</label>
+        <select name="accion" id="accion" required>
+            <option value="activar">Activar</option>
+            <option value="desactivar">Desactivar</option>
+        </select>
+
+        <br><br>
+        <button type="submit" class="button-danger">Confirmar</button> <!-- Aplicación de clase "button-danger" -->
+    </form>
+</body>
+</html>

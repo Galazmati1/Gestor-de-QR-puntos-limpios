@@ -23,7 +23,7 @@ label {
     margin: 10px 0 5px;
 }
 
-input[type="text"], select {
+input[type="text"], input[type="password"], select {
     width: 90%;
     padding: 8px;
     margin-bottom: 10px;
@@ -83,4 +83,39 @@ button:hover {
 #coordenadas {
     margin-top: 10px;
     font-weight: bold;
+}
+
+/* Estilos específicos para los botones de activar/desactivar */
+.button-danger {
+    background-color: #dc3545; /* Rojo de alerta */
+    color: #fff;
+}
+
+.button-danger:hover {
+    background-color: #c82333; /* Rojo más oscuro al pasar el ratón */
+}
+
+/* Estilos específicos para la gestión de usuarios */
+.user-management {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.user-management label {
+    font-weight: bold;
+    color: #333;
+}
+
+.user-management input[type="password"] {
+    width: 90%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+.alert {
+    color: red;
+    font-size: 14px;
 }

@@ -13,9 +13,19 @@
 <body>
     <h1>Modificar Punto Limpio Número {{ punto.punto_limpio }} de {{ punto.empresa }} </h1>
     <form id="punto-form" method="POST" action="{{ url_for('modificar_punto.modificar_punto_form', punto_id=punto._id) }}">
+        
+        <!-- Descripción de la ubicación -->
         <label for="ubicacion">Descripción de la Ubicación:</label>
         <input type="text" id="ubicacion" name="ubicacion" value="{{ punto.ubicacion }}" required>
+        
+        <!-- Estado del punto (Activo/Inactivo) -->
+        <label for="estado">Estado del Punto:</label>
+        <select id="estado" name="estado">
+            <option value="activo" {% if punto.punto_activo %}selected{% endif %}>Activo</option>
+            <option value="inactivo" {% if not punto.punto_activo %}selected{% endif %}>Inactivo</option>
+        </select>
 
+        <!-- Buscar dirección -->
         <label for="buscar-direccion">Buscar por Dirección:</label>
         <input type="text" id="buscar-direccion" placeholder="Ingresa una dirección">
         <button type="button" id="buscar-btn">Buscar Dirección</button>

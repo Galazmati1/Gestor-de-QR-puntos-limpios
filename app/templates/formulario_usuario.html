@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if usuario %}Modificar Usuario{% else %}Crear Nuevo Usuario{% endif %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>{% if usuario %}Modificar Usuario {% else %}Crear Nuevo Usuario{% endif %}</h1>
+    
+    <form method="POST">
+        <label for="usuario">Nombre de Usuario:</label>
+        <input type="text" id="usuario" name="usuario" value="{% if usuario %}{{ usuario.usuario }}{% endif %}" required>
+
+        <label for="empresa">Empresa:</label>
+        <select id="empresa" name="empresa" required>
+            {% for empresa in empresas %}
+            <option value="{{ empresa }}" {% if usuario and usuario.Empresa == empresa %}selected{% endif %}>{{ empresa }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="contraseña">Contraseña (déjelo en blanco si no desea cambiarla):</label>
+        <input type="password" id="contraseña" name="contraseña" placeholder="Nueva Contraseña">
+        
+        <br><br>
+        <button type="submit" class="button">Guardar</button>
+        <a href="{{ url_for('usuarios.seleccionar_usuario') }}">Cancelar</a>
+    </form>
+</body>
+</html>

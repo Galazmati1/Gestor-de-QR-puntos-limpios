@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 from crear_punto import crear_punto_bp
 from modificar_punto import modificar_punto_bp
+from activar_desactivar_puntos import activar_desactivar_bp
+from usuarios import usuarios_bp  
 from PIL import Image  # Asegúrate de importar Pillow aquí
 
 # Cargar variables de entorno desde el archivo .env
@@ -50,5 +52,7 @@ def menu():
 # Registrar los Blueprints
 app.register_blueprint(crear_punto_bp)
 app.register_blueprint(modificar_punto_bp)
+app.register_blueprint(activar_desactivar_bp)
+app.register_blueprint(usuarios_bp)  # Registrar el blueprint de usuarios
 
 # No necesitas el bloque 'if __name__ == "__main__"' porque vas a usar gunicorn en producción

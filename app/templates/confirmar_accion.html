@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Acción</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!-- Enlace al archivo CSS -->
+</head>
+<body>
+    <h1>Confirmar {{ accion }} Puntos de {{ empresa }}</h1>
+
+    <p>¿Está seguro de que desea {{ accion }} todos los puntos limpios de la empresa {{ empresa }}?</p>
+
+    <form method="POST">
+        <button type="submit" class="button-danger">Sí, {{ accion }} todos los puntos</button> <!-- Aplicación de clase "button-danger" -->
+        <a href="{{ url_for('activar_desactivar.seleccionar_empresa') }}" class="button">Cancelar</a> <!-- Botón de cancelar con estilo -->
+    </form>    
+</body>
+</html>

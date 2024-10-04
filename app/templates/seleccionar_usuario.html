@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Seleccionar Usuario</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  <!-- Vincula a tu CSS -->
+    </head>
+<body>
+    <h1>Seleccionar Usuario para Modificar</h1>
+    
+    <form method="POST">
+        <label for="usuario_id">Seleccione un Usuario:</label>
+        <select name="usuario_id" id="usuario_id" required>
+            {% for usuario in usuarios %}
+            <option value="{{ usuario._id }}">{{ usuario.usuario }} ({{ usuario.Empresa }})</option>
+            {% endfor %}
+            <option value="crear">Crear Usuario Nuevo</option>
+        </select>
+
+        <br><br>
+        <button type="submit" class="button">Continuar</button>
+    </form>
+</body>
+</html>
